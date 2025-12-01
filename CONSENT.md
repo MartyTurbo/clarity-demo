@@ -57,18 +57,56 @@ NEXT_PUBLIC_CLARITY_ID=your_clarity_project_id
 NEXT_PUBLIC_CLARITY_ENABLE_DEV=true
 ```
 
-## Clarity API Reference
+## Clarity Consent API V2
 
-The implementation uses the Clarity JavaScript API:
+The implementation uses the **Clarity Consent API V2** format with explicit permission grants:
 
 ```javascript
-// Grant consent (enables tracking)
-clarity('consent')
+// Grant consent with explicit permissions (V2 format)
+clarity('consent', {
+    'analytics_storage': 'granted',
+    'ad_storage': 'granted'
+});
+```
 
-// You can also use clarity to:
-// - Set custom tags: clarity('set', 'key', 'value')
-// - Track custom events: clarity('event', 'eventName')
-// - Identify users: clarity('identify', 'userId')
+### Why V2 Format?
+
+The V2 format is more explicit and aligns with Google's Consent Mode standards:
+
+- ✅ **Explicit Permissions**: Clearly states which permissions are granted
+- ✅ **Google Consent Mode Compatible**: Works with Google's consent framework
+- ✅ **Future-Proof**: Supports granular permission control
+- ✅ **Better Compliance**: More transparent about what's being tracked
+
+### Available Permissions
+
+- `analytics_storage`: Enables storage for analytics (session recordings, heatmaps)
+- `ad_storage`: Enables storage for advertising purposes (remarketing, conversion tracking)
+
+### Legacy Format (Still Supported)
+
+```javascript
+// Old format - still works but less explicit
+clarity('consent')
+```
+
+### Other Clarity API Methods
+
+```javascript
+// Set custom tags
+clarity('set', 'key', 'value')
+
+// Track custom events
+clarity('event', 'eventName')
+
+// Identify users
+clarity('identify', 'userId')
+
+// Update consent dynamically
+clarity('consent', {
+    'analytics_storage': 'denied',  // Revoke permission
+    'ad_storage': 'granted'
+});
 ```
 
 ## Privacy Considerations
