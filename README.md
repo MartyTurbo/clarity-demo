@@ -2,6 +2,10 @@
 
 A Next.js application for testing [Microsoft Clarity](https://clarity.microsoft.com) analytics integration with automatic consent (covered by TOS).
 
+**🚀 Live Demo:** [https://clarity-demo-eight.vercel.app/](https://clarity-demo-eight.vercel.app/)
+
+**📦 GitHub:** [https://github.com/MartyTurbo/clarity-demo](https://github.com/MartyTurbo/clarity-demo)
+
 ## Features
 
 - ✅ Next.js 15 with App Router
@@ -59,16 +63,39 @@ Clarity automatically tracks:
 - 🗺️ Heatmaps of user activity
 - 🔴 Rage clicks and dead clicks
 
-The integration is configured to automatically approve consent (covered by TOS) without requiring user interaction.
+### Auto-Consent Implementation
 
-## Deploy on Vercel
+The integration is configured to **automatically approve consent** (covered by TOS) without requiring user interaction. This is implemented in the `ClarityScript.tsx` component:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/clarity-demo)
+- ✅ Consent is automatically granted when Clarity loads
+- ✅ No cookie banners or consent prompts
+- ✅ Tracking starts immediately for all users
+- ✅ Only loads in production by default (disable dev tracking)
 
-1. Push this repository to GitHub
-2. Import the project in Vercel
-3. Add your `NEXT_PUBLIC_CLARITY_ID` environment variable in Vercel
+### Environment Variables
+
+- `NEXT_PUBLIC_CLARITY_ID`: Your Clarity Project ID (required)
+- `NEXT_PUBLIC_CLARITY_ENABLE_DEV`: Set to `"true"` to enable Clarity in development mode (optional)
+
+## Production Deployment
+
+This project is deployed on Vercel: **[clarity-demo-eight.vercel.app](https://clarity-demo-eight.vercel.app/)**
+
+### Deploy Your Own
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/MartyTurbo/clarity-demo)
+
+**Steps:**
+1. Fork or clone this repository
+2. Import the project in [Vercel](https://vercel.com)
+3. Add environment variable in Vercel:
+   - **Key:** `NEXT_PUBLIC_CLARITY_ID`
+   - **Value:** Your Clarity Project ID (e.g., `uel5b1h20s`)
 4. Deploy!
+
+### Vercel Configuration
+
+The `vercel.json` file includes the production Clarity ID. For your own deployment, update this file or set the environment variable in the Vercel dashboard.
 
 ## Project Structure
 

@@ -1,0 +1,8 @@
+{
+  "buildCommand": "npm run build",
+  "framework": "nextjs",
+  "env": {
+    "NEXT_PUBLIC_CLARITY_ID": "uel5b1h20s"
+  }
+}
+

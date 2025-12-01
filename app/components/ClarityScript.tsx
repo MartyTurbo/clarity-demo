@@ -9,12 +9,27 @@ export default function ClarityScript() {
   useEffect(() => {
     // Auto-approve consent for Clarity (covered by TOS)
     if (typeof window !== 'undefined' && clarityId) {
-      console.log('Microsoft Clarity initialized with auto-consent')
+      // Set consent to approved before Clarity initializes
+      // This ensures tracking starts immediately without consent prompts
+      if (typeof (window as any).clarity === 'function') {
+        (window as any).clarity('consent')
+      }
+      
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Microsoft Clarity initialized with auto-consent approval')
+      }
     }
   }, [clarityId])
 
+  // Don't load Clarity in development unless explicitly enabled
+  if (process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_CLARITY_ENABLE_DEV !== 'true') {
+    return null
+  }
+
   if (!clarityId) {
-    console.warn('NEXT_PUBLIC_CLARITY_ID is not set')
+    if (process.env.NODE_ENV === 'production') {
+      console.error('NEXT_PUBLIC_CLARITY_ID is not set in production')
+    }
     return null
   }
 
@@ -22,6 +37,12 @@ export default function ClarityScript() {
     <Script
       id="clarity-script"
       strategy="afterInteractive"
+      onLoad={() => {
+        // Automatically approve consent as soon as Clarity loads
+        if (typeof (window as any).clarity === 'function') {
+          (window as any).clarity('consent')
+        }
+      }}
       dangerouslySetInnerHTML={{
         __html: `
           (function(c,l,a,r,i,t,y){
